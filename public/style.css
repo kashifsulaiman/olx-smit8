@@ -1,0 +1,23 @@
+.image-afridi {
+    width: 150px;
+    height: 150px;
+
+}
+
+
+.hidden {
+    display: none;
+    /* visibility: hidden; */
+}
+
+.item {
+    background-color: brown;
+    color: white;
+    margin: 30px;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+.comments {
+    background-color: darkblue;
+}

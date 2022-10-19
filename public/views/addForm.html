@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="email" placeholder="Enter your email" /> <br />
+    <input placeholder="Enter your password" /> <br />
+
+    <input placeholder="Enter your fullname" /> <br />
+    <input placeholder="Enter your age" /> <br />
+
+    <p id="error" style="color: red"></p>
+
+    <button onclick="signIn()">Sign in</button>
+    <button onclick="signUp()">Sign Up</button>
+
+
+    <br /><br /><br /><br /><br /><br />
+    <div style="border: 1px solid red" id="ad-form">
+        <h1>Submit an Ad</h1>
+        <input id="title" placeholder="Enter ad's title" /> <br />
+        <input id="price" placeholder="Enter ad's price" /> <br />
+        <input id="image" type="file" /> <br />
+
+        <button onclick="postAd()">Submit</button>
+    </div>
+
+    <div id="ads">
+        
+    </div>
+
+    <script type="module" src="../config/firebase.js"></script>
+    <script type="module" src="../js/addForm.js"></script>
+</body>
+
+</html>
