@@ -4,6 +4,7 @@ import {
     getRealtimeAds
 } from '../config/firebase.js'
 
+//this will get all the ads
 getAds()
 
 window.signUp = async function () {
@@ -77,7 +78,7 @@ function getAds() {
         </div>`
         }
     })
-    
+
 
 
 
