@@ -5,6 +5,7 @@ import {
 } from '../config/firebase.js'
 
 //this will get all the ads
+
 getAds()
 
 window.signUp = async function () {
