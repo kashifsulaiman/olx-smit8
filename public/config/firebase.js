@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js"
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js'
-import { getFirestore, setDoc, doc, addDoc, collection, getDocs, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js'
+import { getFirestore, setDoc, doc, getDoc, addDoc, collection, where, getDocs, onSnapshot, query } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js'
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js"
 
 const firebaseConfig = {
@@ -83,13 +83,50 @@ function getRealtimeAds(callback) {
     })
 }
 
+function getFirebaseAd(id) {
+    const docRef = doc(db, "ads", id)
+    return getDoc(docRef)
+}
+
+async function checkChatroom(adUserId) {
+    const userId = auth.currentUser.uid
+    const q = query(collection(db, "chatrooms"),
+        where(`users.${userId}`, "==", true),
+        where(`users.${adUserId}`, "==", true))
+
+    const querySnapshot = await getDocs(q)
+
+    let room
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        room = { _id: doc.id, ...doc.data() }
+    })
+    return room
+}
+
+function createChatroom(adUserId) {
+    const userId = auth.currentUser.uid
+    const obj =  {
+        users: { 
+            [userId]: true, 
+            [adUserId]: true 
+        },
+        createdAt: Date.now()
+    } 
+    return addDoc(collection(db, "chatrooms"), obj)
+}
+
 export {
     signInFirebase,
     signUpFirebase,
     postAdToDb,
     uploadImage,
     getAdsFromDb,
-    getRealtimeAds
+    getRealtimeAds,
+    getFirebaseAd,
+    checkChatroom,
+    createChatroom
 }
 
 /*

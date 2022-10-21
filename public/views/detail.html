@@ -7,22 +7,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <script>
+    <script type="module">
 
+        import { getFirebaseAd, checkChatroom, createChatroom } from '../config/firebase.js'
+
+        let data
         getAdDetail()
 
-        function getAdDetail() {
+        async function getAdDetail() {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id')
 
-            //getFirebaseAd(id)
-            console.log('ad id ===>', id)
+            const doc = await getFirebaseAd(id)
+            data = doc.data()
+        }
+
+        window.initiateChat = async function () {
+            console.log('userId ===>', data.userId)
+            //1. check if chatroom exists
+            let chatroom = await checkChatroom(data.userId)
+
+            //2. if not exists then create it
+            if (!chatroom) {
+                chatroom = await createChatroom(data.userId)
+                alert('chatroom created successfully')
+            } else {
+                alert('chatroom exists')
+            }
+            const chatId = chatroom._id
+
+            location.href = `chat.html?id=${chatId}`
+
         }
     </script>
 </head>
 
 <body>
     <h1>Detail</h1>
+
+    <button onclick="initiateChat()">Message</button>
 </body>
 
 </html>
